@@ -8,8 +8,14 @@ builder.Services.AddDbContext<DataContext>(opts => {
     "ConnectionStrings:ProductConnection"]);
     opts.EnableSensitiveDataLogging(true);
 });
+builder.Services.AddControllers();
+
 var app = builder.Build();
+app.MapControllers();
 app.UseMiddleware<WebApp2024.TestMiddleware>();
+
+
+
 app.MapGet("/", () => "Hello World!");
 
 var context = app.Services.CreateScope().ServiceProvider

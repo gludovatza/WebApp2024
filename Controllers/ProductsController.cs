@@ -21,5 +21,12 @@ namespace WebApp2024.Controllers
         {
             return context.Products.Find(id);
         }
+
+        [HttpPost]
+        public void SaveProduct([FromBody] Product product)
+        {
+            context.Products.Add(product);
+            context.SaveChanges();
+        }
     }
 }

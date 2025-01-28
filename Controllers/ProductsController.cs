@@ -17,9 +17,9 @@ namespace WebApp2024.Controllers
             return context.Products;
         }
         [HttpGet("{id}")]
-        public Product? GetProduct()
+        public Product? GetProduct(long id)
         {
-            return context.Products.FirstOrDefault();
+            return context.Products.Find(id);
         }
     }
 }

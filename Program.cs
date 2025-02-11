@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
 using WebApp2024.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,11 @@ builder.Services.AddDbContext<DataContext>(opts => {
 builder.Services.AddControllers();
 
 builder.Services.AddCors();
+
+builder.Services.Configure<JsonOptions>(opts => {
+    opts.JsonSerializerOptions.DefaultIgnoreCondition
+    = JsonIgnoreCondition.WhenWritingNull;
+});
 
 var app = builder.Build();
 app.MapControllers();

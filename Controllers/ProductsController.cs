@@ -52,7 +52,15 @@ namespace WebApp2024.Controllers
         [HttpGet("redirect")]
         public IActionResult Redirect()
         {
-            return Redirect("/api/products/1");
+            // Ez a következő három utasítás egymással ekvivalens
+            //return Redirect("/api/products/1");
+            //return RedirectToAction(nameof(GetProduct), new { Id = 1 });
+            return RedirectToRoute(new
+            {
+                controller = "Products",
+                action = "GetProduct",
+                Id = 1
+            });
         }
     }
 }

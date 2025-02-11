@@ -25,14 +25,7 @@ namespace WebApp2024.Controllers
             {
                 return NotFound();
             }
-            return Ok(new
-            {
-                ProductId = p.ProductId,
-                Name = p.Name,
-                Price = p.Price,
-                CategoryId = p.CategoryId,
-                SupplierId = p.SupplierId
-            });
+            return Ok(p);
         }
 
         [HttpPost]

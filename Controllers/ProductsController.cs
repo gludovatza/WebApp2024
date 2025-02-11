@@ -30,10 +30,14 @@ namespace WebApp2024.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveProduct([FromBody] ProductBindingTarget target)
         {
-            Product p = target.ToProduct();
-            await context.Products.AddAsync(p);
-            await context.SaveChangesAsync();
-            return Ok(p);
+            if (ModelState.IsValid)
+            {
+                Product p = target.ToProduct();
+                await context.Products.AddAsync(p);
+                await context.SaveChangesAsync();
+                return Ok(p);
+            }
+            return BadRequest(ModelState);
         }
 
         [HttpPut]

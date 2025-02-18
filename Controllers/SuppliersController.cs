@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApp2024.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace WebApp2024.Controllers
 {
@@ -27,6 +28,20 @@ namespace WebApp2024.Controllers
                 {
                     product.Supplier = null;
                 }
+            }
+            return s;
+        }
+
+        // Invoke-RestMethod http://localhost:5000/api/suppliers/1 -Method PATCH -ContentType "application/json" -Body '[{"op":"replace","path":"City","value":"Los Angeles"}]'
+        [HttpPatch("{id}")]
+        public async Task<Supplier?> PatchSupplier(long id,
+            JsonPatchDocument<Supplier> patchDoc)
+        {
+            Supplier? s = await context.Suppliers.FindAsync(id);
+            if (s != null)
+            {
+                patchDoc.ApplyTo(s);
+                await context.SaveChangesAsync();
             }
             return s;
         }

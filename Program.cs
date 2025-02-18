@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 //using System.Text.Json.Serialization;
 using WebApp2024.Models;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,11 +27,18 @@ builder.Services.Configure<MvcNewtonsoftJsonOptions>(opts => {
 //    = JsonIgnoreCondition.WhenWritingNull;
 //});
 
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApp", Version = "v1" });
+});
+
 var app = builder.Build();
 app.MapControllers();
 app.UseMiddleware<WebApp2024.TestMiddleware>();
 
-
+app.UseSwagger();
+app.UseSwaggerUI(options => {
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApp");
+});
 
 app.MapGet("/", () => "Hello World!");
 

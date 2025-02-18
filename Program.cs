@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Serialization;
+//using System.Text.Json.Serialization;
 using WebApp2024.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,10 +14,17 @@ builder.Services.AddControllers();
 
 builder.Services.AddCors();
 
-builder.Services.Configure<JsonOptions>(opts => {
-    opts.JsonSerializerOptions.DefaultIgnoreCondition
-    = JsonIgnoreCondition.WhenWritingNull;
+builder.Services.AddControllers().AddNewtonsoftJson();
+
+builder.Services.Configure<MvcNewtonsoftJsonOptions>(opts => {
+    opts.SerializerSettings.NullValueHandling
+    = Newtonsoft.Json.NullValueHandling.Ignore;
 });
+
+//builder.Services.Configure<JsonOptions>(opts => {
+//    opts.JsonSerializerOptions.DefaultIgnoreCondition
+//    = JsonIgnoreCondition.WhenWritingNull;
+//});
 
 var app = builder.Build();
 app.MapControllers();
